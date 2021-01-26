@@ -1,0 +1,205 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+ul,
+ol,
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: black;
+}
+nav,
+header,
+div,
+span,
+section {
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+}
+nav#top-nav {
+  width: 100%;
+  height: 70rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 900;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+nav#top-nav ul#top-nav-navBox {
+  margin-left: 110rem;
+  float: left;
+  overflow: hidden;
+}
+nav#top-nav ul#top-nav-navBox li.top-nav-btn {
+  width: 100rem;
+  height: 70rem;
+  line-height: 70rem;
+  margin-right: 65rem;
+  float: left;
+  font-size: 23rem;
+  font-family: "montserrat";
+  color: #000;
+  text-align: center;
+}
+nav#top-nav div#top-nav-chaseBox {
+  width: 70rem;
+  height: 70rem;
+  background-color: #000;
+  float: left;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+nav#top-nav ul#top-nav-shareBox {
+  width: 200rem;
+  height: 70rem;
+  background-color: #000;
+  margin-right: 110rem;
+  float: right;
+}
+header#top-header {
+  width: 100%;
+  height: 900rem;
+  background-color: #fff1d8;
+  position: relative;
+  overflow: hidden;
+}
+header#top-header div#top-header-bg {
+  width: 100%;
+  height: 900rem;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+header#top-header div#top-header-imgs {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+header#top-header div#top-header-imgs div#top-header-earth {
+  width: 1000rem;
+  height: 1000rem;
+  border-radius: 50%;
+  background-color: #9c7149;
+  position: absolute;
+  top: 100%;
+  left: 10%;
+  transform: translateY(-15%);
+}
+header#top-header div#top-header-imgs div#top-header-plane-window {
+  width: 400rem;
+  height: 550rem;
+  border: 5rem solid #888;
+  border-radius: 130rem;
+  background-color: #eee;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+  position: absolute;
+  top: 50%;
+  transform: translateY(-40%);
+  right: 15%;
+}
+header#top-header div#top-header-imgs div#top-header-plane-window div.window {
+  width: 300rem;
+  height: 450rem;
+  border-radius: 80rem;
+  background-color: #74dfb2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+}
+header#top-header div#top-header-imgs div#top-header-plane-window div.window div.window-curtain {
+  width: 288rem;
+  height: 438rem;
+  border-radius: 64rem;
+  background-color: #ddd;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -80%);
+  box-shadow: 0 0 15rem 0 rgba(0, 0, 0, 0.7);
+}
+header#top-header div#top-header-imgs div#top-header-plane-window div.window div.window-curtain div.curtain-handle {
+  width: 30%;
+  height: 10rem;
+  background-color: #bbb;
+  border-radius: 5rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 3%;
+  box-shadow: 0 0 8rem 0 rgba(75, 75, 75, 0.4) inset;
+}
+header#top-header div#top-header-imgs div#top-header-plane-window div.window div.window-curtain div.curtain-handle div.curtain-light {
+  width: 20rem;
+  height: 6rem;
+  border-radius: 3rem;
+  background-color: #0f0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+header#top-header div#top-header-imgs div#top-header-plane-window div.window div.window-inner-border {
+  width: 300rem;
+  height: 450rem;
+  border: 8rem solid #888;
+  border-radius: 80rem;
+  box-shadow: 0 0 20rem 0 rgba(0, 0, 0, 0.6) inset;
+  position: absolute;
+}
+header#top-header div#top-header-title {
+  position: absolute;
+  z-index: 99;
+}
+header#top-header div#top-header-shadow {
+  width: 100%;
+  height: 900rem;
+  box-shadow: 0 -15rem 35rem -15rem rgba(200, 200, 200, 0.6) inset;
+  position: absolute;
+}
+section#mid-main {
+  width: 1500rem;
+  margin: 60rem auto 0;
+  position: relative;
+  overflow: hidden;
+}
+section#mid-main div.mid-main-long-box {
+  width: 1500rem;
+  height: 450rem;
+  border-radius: 30rem;
+  margin: 30rem 0;
+}
+section#mid-main div.mid-main-long-box div.long-box-shadow {
+  border-radius: 30rem;
+}
+section#mid-main div.mid-main-short-box {
+  width: 710rem;
+  height: 450rem;
+  border-radius: 30rem;
+  margin: 30rem 0;
+}
+section#mid-main div.mid-main-short-box div.short-box-shadow {
+  border-radius: 30rem;
+}
+section#mid-main div.left-box {
+  float: left;
+}
+section#mid-main div.right-box {
+  float: right;
+}
+section#mid-main div.main-box-shadow {
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 20rem 0 rgba(200, 200, 200, 0.4) inset;
+}

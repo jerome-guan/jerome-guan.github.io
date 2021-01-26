@@ -1,0 +1,302 @@
+// common style
+* {padding: 0;  margin: 0;}
+ul, ol, li {list-style: none;}
+a {text-decoration: none; color: black;}
+nav, header, div, span, section {box-sizing: border-box;}
+
+// html / body
+html, body {width: 100%;}
+
+// less variables
+@header-img-height: 900rem;
+@top-nav-height: 70rem;
+
+// index style
+// 头部：头部导航栏 navigation
+nav#top-nav {
+    // 导航栏样式 nav-bar
+    width: 100%;
+    height: @top-nav-height;
+
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 900;
+    background-color: rgba(0, 0, 0, 0.3);
+    
+
+    // 导航按钮样式 nav-btn
+    ul#top-nav-navBox {
+        margin-left: 110rem;
+
+        float: left;
+        overflow: hidden;
+
+        li.top-nav-btn {
+            width: 100rem;
+            height: @top-nav-height;
+            line-height: @top-nav-height;
+            margin-right: 65rem;
+
+            float: left;
+
+            font-size: 23rem;
+            font-family: "montserrat";
+            color: #000;
+            text-align: center;
+
+        }
+    }
+
+    // 追踪部件样式 chase-gadget
+    div#top-nav-chaseBox {
+        width: @top-nav-height;
+        height: @top-nav-height;
+        background-color: #000;
+
+        float: left;
+        position: absolute;
+        top: 50%;   left: 50%;
+        transform: translate(-50%, -50%);
+
+    }
+
+    // 分享区   shareBox
+    ul#top-nav-shareBox {
+        width: 200rem;
+        height: @top-nav-height;
+        background-color: #000;
+        margin-right: 110rem;
+
+        float: right;
+    }
+
+}
+// 头部：头部导航栏-结束 navigation ends
+
+
+// 头部：头部大图   header
+header#top-header {
+
+    // 头部大图样式 header
+    width: 100%;
+    height: @header-img-height;
+
+    background-color: #fff1d8;
+
+    position: relative;
+    // z-index: 0;
+    overflow: hidden;
+
+    // 背景图片 header-bg
+    // 背景图片不能随意放大缩小，必须按比例 或者做背景图片填充
+    // level: 10-19
+    div#top-header-bg {
+        width: 100%;
+        height: @header-img-height;
+
+        position: absolute;
+        left: 0;    top: 0;
+        // z-index: 10;
+
+        
+
+    }
+
+    // 背景图片上层其他图片 header-imgs
+    // level: 20-29
+    div#top-header-imgs {
+        width: 100%;    height: 100%;
+        position: absolute;
+        left: 0;    top: 0;
+        // z-index: 20;
+
+        // 旋转地球组件
+        div#top-header-earth {
+            width: 1000rem; height:1000rem;
+            border-radius: 50%;
+            background-color: rgb(156, 113, 73);
+
+            position: absolute;
+            top: 100%;  left: 10%;
+            transform: translateY(-15%);
+        }
+
+        // 飞机舷窗部件 plane-window
+        // level: 27-28
+        div#top-header-plane-window {
+
+            // 飞机舷窗参数 window-variables
+            @outer-border-width: 400rem;
+            @outer-border-height: 550rem;
+            @outer-border-radius: 130rem;
+
+            @window-width: 300rem;
+            @window-height: 450rem;
+            @window-radius: 80rem;
+
+            @inner-border: 8rem;
+
+            @window-outer-border-color: #eee;
+            @window-curtain-color: #ddd;
+            @window-handle-color: #bbb;
+            @border-color: #888;
+
+            @handle-height: 10rem;
+
+            //-----------------------
+
+            // 舷窗外边框
+            width: @outer-border-width;
+            height: @outer-border-height;
+            border: 5rem solid @border-color;
+            border-radius: @outer-border-radius;
+            background-color: @window-outer-border-color;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, .5);
+
+            position: absolute;
+            // z-index: 27;
+            top: 50%;   transform: translateY(-40%);
+            right: 15%;
+
+            // 舷窗
+            div.window {
+                width: @window-width;  
+                height: @window-height;
+                border-radius: @window-radius;
+                background-color: #74dfb2;
+
+                position: absolute;
+                top: 50%;   left: 50%;
+                transform: translate(-50%, -50%);
+                overflow: hidden;
+
+                
+                // 舷窗挡板
+                div.window-curtain {
+                    width: @window-width - 1.5*@inner-border;  
+                    height: @window-height - 1.5*@inner-border;
+                    border-radius: @window-radius * 0.8;
+
+                    background-color: @window-curtain-color;
+                    position: absolute;
+                    top: 50%;   left: 50%;
+                    transform: translate(-50%, -80%);
+
+                    box-shadow: 0 0 15rem 0 rgba(0, 0, 0, .7);
+                    
+                    // 舷窗挡板把手
+                    div.curtain-handle {
+                        width: 30%; height: @handle-height;
+                        background-color: @window-handle-color;
+                        border-radius: @handle-height / 2;
+                        
+                        position: absolute;
+                        left: 50%;  transform: translateX(-50%);
+                        bottom: 3%;
+
+                        box-shadow: 0 0 8rem 0 rgba(75, 75, 75, 0.4) inset;
+
+                        // 舷窗挡板把手指示灯
+                        div.curtain-light {
+                            width: @handle-height * 2;
+                            height: @handle-height * 0.6;
+                            border-radius: @handle-height * 0.3;
+                            background-color: #0f0;
+
+                            position: absolute;
+                            top: 50%;   left: 50%;
+                            transform: translate(-50%, -50%);
+                        }
+                    }
+                }
+
+                // 舷窗内边框
+                div.window-inner-border {
+                    width: @window-width;  
+                    height: @window-height;
+                    border: @inner-border solid @border-color;
+                    border-radius: @window-radius;
+                    box-shadow: 0 0 20rem 0 rgba(0, 0, 0, .6) inset;
+
+                    position: absolute;
+
+                }
+                
+            }
+        }
+
+    }
+
+    // 头部背景图上标题 top-header-title
+    div#top-header-title {
+        position: absolute;
+        
+        z-index: 99;    // at the top level of all
+    }
+
+    // 头部背景阴影
+    div#top-header-shadow {
+        width: 100%;    height: @header-img-height;
+        box-shadow: 0 -15rem 35rem -15rem rgba(200, 200, 200, 0.6) inset;
+        
+        position: absolute;
+    }
+
+}
+
+section#mid-main {
+    @mid-main-width: 1500rem;
+
+    width: @mid-main-width;
+    margin: 60rem auto 0;
+    position: relative;
+    overflow: hidden;
+
+
+    // mid-main部分盒子通用参数
+    @mid-main-box-height: 450rem;
+    @box-updown-margin: 30rem;
+    @box-side-margin: 40rem;
+    @long-box-radius: 30rem;
+    @short-box-radius: 30rem;
+
+    // 长盒子通用样式
+    div.mid-main-long-box {
+        width: @mid-main-width;    height: @mid-main-box-height;
+        border-radius: @long-box-radius;
+        margin: @box-updown-margin 0;
+
+        // 长盒子内阴影通用样式
+        div.long-box-shadow {
+            border-radius: @long-box-radius;
+        }
+    }
+
+    // 短盒子通用样式
+    div.mid-main-short-box {
+        width: @mid-main-width / 2 -  @box-side-margin;    
+        height: @mid-main-box-height;
+        border-radius: @short-box-radius;
+        margin: @box-updown-margin 0;
+        
+        div.short-box-shadow {
+            border-radius: @short-box-radius;
+        }
+    }
+    div.left-box {
+        float: left;
+    }
+    div.right-box {
+        float: right;
+    }
+    // 盒子阴影
+    div.main-box-shadow {
+        width: 100%;    height: 100%;
+        box-shadow: 0 0 20rem 0 rgba(200, 200, 200, .4) inset;
+    }
+    
+    
+    // 当前工作 current job
+    
+
+}
