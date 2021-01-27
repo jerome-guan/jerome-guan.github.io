@@ -2,14 +2,18 @@
 * {padding: 0;  margin: 0;}
 ul, ol, li {list-style: none;}
 a {text-decoration: none; color: black;}
+i, em {font-style: normal;}
 nav, header, div, span, section {box-sizing: border-box;}
 
 // html / body
 html, body {width: 100%;}
+html {background-color: rgba(255, 240, 215, .1);}
 
 // less variables
-@header-img-height: 900rem;
+@header-img-height: 1000rem;
 @top-nav-height: 70rem;
+
+@center-width: 1500rem;
 
 // index style
 // 头部：头部导航栏 navigation
@@ -148,14 +152,14 @@ header#top-header {
             // 舷窗外边框
             width: @outer-border-width;
             height: @outer-border-height;
-            border: 5rem solid @border-color;
+            border: 5rem solid @border-color - #333;
             border-radius: @outer-border-radius;
             background-color: @window-outer-border-color;
-            box-shadow: 0 0 20px 0 rgba(0, 0, 0, .5);
+            box-shadow: 0 0 10rem 0 rgba(0, 0, 0, .5);
 
             position: absolute;
             // z-index: 27;
-            top: 50%;   transform: translateY(-40%);
+            top: 50%;   transform: translateY(-50%);
             right: 15%;
 
             // 舷窗
@@ -214,9 +218,9 @@ header#top-header {
                 div.window-inner-border {
                     width: @window-width;  
                     height: @window-height;
-                    border: @inner-border solid @border-color;
+                    border: @inner-border solid @border-color + #111;
                     border-radius: @window-radius;
-                    box-shadow: 0 0 20rem 0 rgba(0, 0, 0, .6) inset;
+                    box-shadow: 0 0 10rem 0 rgba(0, 0, 0, .5) inset;
 
                     position: absolute;
 
@@ -229,15 +233,51 @@ header#top-header {
 
     // 头部背景图上标题 top-header-title
     div#top-header-title {
+
         position: absolute;
-        
-        z-index: 99;    // at the top level of all
+        left: 200rem;   top: 300rem;
+
+
+        background-color: #fff;
+
+        font-size: 70rem;
+        font-weight: 600;
+
+        // p {
+        //     position: relative;
+        //     display: flex;
+        // }
+        // p:first-child {
+        //     width: 50%;
+        // }
+        // p:last-child {
+        //     width: 100%;
+        // }
+        // span {
+        //     position: relative;
+        // }
+
+        // span.space {
+        //     width: 20rem;
+        //     background-color: black;
+        // }
+        // span.word {
+        //     overflow: hidden;
+        //     background-color: grey;
+
+        //     i {
+        //         position: relative;
+                
+        //       // 这里要注意一点，因为父盒子span是inline没有高度，所以设置为100%的话会无法进行移动。
+        //     }
+        // }
+        // z-index: 99;    // at the top level of all
     }
 
     // 头部背景阴影
     div#top-header-shadow {
         width: 100%;    height: @header-img-height;
-        box-shadow: 0 -15rem 35rem -15rem rgba(200, 200, 200, 0.6) inset;
+        box-shadow: 0 -15rem 35rem -15rem rgba(129, 129, 129, 0.6) inset;
         
         position: absolute;
     }
@@ -245,7 +285,8 @@ header#top-header {
 }
 
 section#mid-main {
-    @mid-main-width: 1500rem;
+    @mid-main-width: @center-width;
+    @main-box-color: #fff;
 
     width: @mid-main-width;
     margin: 60rem auto 0;
@@ -265,6 +306,8 @@ section#mid-main {
         width: @mid-main-width;    height: @mid-main-box-height;
         border-radius: @long-box-radius;
         margin: @box-updown-margin 0;
+        
+        background-color: @main-box-color;
 
         // 长盒子内阴影通用样式
         div.long-box-shadow {
@@ -273,11 +316,16 @@ section#mid-main {
     }
 
     // 短盒子通用样式
+    div.short-box-container {
+        overflow: hidden;
+    }
     div.mid-main-short-box {
         width: @mid-main-width / 2 -  @box-side-margin;    
         height: @mid-main-box-height;
         border-radius: @short-box-radius;
         margin: @box-updown-margin 0;
+
+        background-color: @main-box-color;
         
         div.short-box-shadow {
             border-radius: @short-box-radius;
@@ -298,5 +346,48 @@ section#mid-main {
     
     // 当前工作 current job
     
+
+}
+
+
+// 底部 footer
+footer {
+    
+    @footer-width: @center-width;
+    @footer-height: 400rem;
+    @animoji-height: @footer-height * 0.85;
+
+    width: @footer-width;
+    height: @footer-height;
+    margin: 30rem auto 0;
+    
+    position: relative;
+
+    div#footer-animoji {
+        height: @animoji-height;
+
+        position: absolute;
+        bottom: 0;  left: 15%;
+
+        img {
+            height: 100%;
+        }
+    }
+
+    div#footer-content {
+        position: absolute;
+        top: 50%;   transform: translateY(-50%);
+        right: 20%;
+        div.footer-title {
+            text-align: center;
+            font-size: 80rem;
+        }
+
+        div.footer-text {
+            text-align: center;
+            font-size: 23rem;
+        }
+    }
+
 
 }

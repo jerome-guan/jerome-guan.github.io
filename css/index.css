@@ -11,6 +11,10 @@ a {
   text-decoration: none;
   color: black;
 }
+i,
+em {
+  font-style: normal;
+}
 nav,
 header,
 div,
@@ -21,6 +25,9 @@ section {
 html,
 body {
   width: 100%;
+}
+html {
+  background-color: rgba(255, 240, 215, 0.1);
 }
 nav#top-nav {
   width: 100%;
@@ -66,14 +73,14 @@ nav#top-nav ul#top-nav-shareBox {
 }
 header#top-header {
   width: 100%;
-  height: 900rem;
+  height: 1000rem;
   background-color: #fff1d8;
   position: relative;
   overflow: hidden;
 }
 header#top-header div#top-header-bg {
   width: 100%;
-  height: 900rem;
+  height: 1000rem;
   position: absolute;
   left: 0;
   top: 0;
@@ -98,13 +105,13 @@ header#top-header div#top-header-imgs div#top-header-earth {
 header#top-header div#top-header-imgs div#top-header-plane-window {
   width: 400rem;
   height: 550rem;
-  border: 5rem solid #888;
+  border: 5rem solid #555555;
   border-radius: 130rem;
   background-color: #eee;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 10rem 0 rgba(0, 0, 0, 0.5);
   position: absolute;
   top: 50%;
-  transform: translateY(-40%);
+  transform: translateY(-50%);
   right: 15%;
 }
 header#top-header div#top-header-imgs div#top-header-plane-window div.window {
@@ -153,19 +160,23 @@ header#top-header div#top-header-imgs div#top-header-plane-window div.window div
 header#top-header div#top-header-imgs div#top-header-plane-window div.window div.window-inner-border {
   width: 300rem;
   height: 450rem;
-  border: 8rem solid #888;
+  border: 8rem solid #999999;
   border-radius: 80rem;
-  box-shadow: 0 0 20rem 0 rgba(0, 0, 0, 0.6) inset;
+  box-shadow: 0 0 10rem 0 rgba(0, 0, 0, 0.5) inset;
   position: absolute;
 }
 header#top-header div#top-header-title {
   position: absolute;
-  z-index: 99;
+  left: 200rem;
+  top: 300rem;
+  background-color: #fff;
+  font-size: 70rem;
+  font-weight: 600;
 }
 header#top-header div#top-header-shadow {
   width: 100%;
-  height: 900rem;
-  box-shadow: 0 -15rem 35rem -15rem rgba(200, 200, 200, 0.6) inset;
+  height: 1000rem;
+  box-shadow: 0 -15rem 35rem -15rem rgba(129, 129, 129, 0.6) inset;
   position: absolute;
 }
 section#mid-main {
@@ -179,15 +190,20 @@ section#mid-main div.mid-main-long-box {
   height: 450rem;
   border-radius: 30rem;
   margin: 30rem 0;
+  background-color: #fff;
 }
 section#mid-main div.mid-main-long-box div.long-box-shadow {
   border-radius: 30rem;
+}
+section#mid-main div.short-box-container {
+  overflow: hidden;
 }
 section#mid-main div.mid-main-short-box {
   width: 710rem;
   height: 450rem;
   border-radius: 30rem;
   margin: 30rem 0;
+  background-color: #fff;
 }
 section#mid-main div.mid-main-short-box div.short-box-shadow {
   border-radius: 30rem;
@@ -202,4 +218,33 @@ section#mid-main div.main-box-shadow {
   width: 100%;
   height: 100%;
   box-shadow: 0 0 20rem 0 rgba(200, 200, 200, 0.4) inset;
+}
+footer {
+  width: 1500rem;
+  height: 400rem;
+  margin: 30rem auto 0;
+  position: relative;
+}
+footer div#footer-animoji {
+  height: 340rem;
+  position: absolute;
+  bottom: 0;
+  left: 15%;
+}
+footer div#footer-animoji img {
+  height: 100%;
+}
+footer div#footer-content {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 20%;
+}
+footer div#footer-content div.footer-title {
+  text-align: center;
+  font-size: 80rem;
+}
+footer div#footer-content div.footer-text {
+  text-align: center;
+  font-size: 23rem;
 }
