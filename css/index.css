@@ -36,10 +36,10 @@ nav#top-nav {
   top: 0;
   left: 0;
   z-index: 900;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: rgba(250, 245, 230, 0.99);
 }
 nav#top-nav ul#top-nav-navBox {
-  margin-left: 110rem;
+  margin-left: 210rem;
   float: left;
   overflow: hidden;
 }
@@ -57,30 +57,49 @@ nav#top-nav ul#top-nav-navBox li.top-nav-btn {
 nav#top-nav div#top-nav-chaseBox {
   width: 70rem;
   height: 70rem;
-  background-color: #000;
   float: left;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+nav#top-nav div#top-nav-chaseBox div.top-nav-chase-earth {
+  width: 55rem;
+  height: 55rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -60%);
+}
+nav#top-nav div#top-nav-chaseBox div.top-nav-chase-plane {
+  width: 52rem;
+  height: 52rem;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 20%;
+}
+nav#top-nav div#top-nav-chaseBox img {
+  width: 100%;
+  height: 100%;
+}
 nav#top-nav ul#top-nav-shareBox {
   width: 200rem;
   height: 70rem;
   background-color: #000;
-  margin-right: 110rem;
+  margin-right: 210rem;
   float: right;
 }
 header#top-header {
   width: 100%;
-  height: 1000rem;
-  background-color: #fff1d8;
+  height: 1050rem;
+  background-color: #faf5e6;
   position: relative;
   overflow: hidden;
 }
 header#top-header div#top-header-bg {
   width: 100%;
-  height: 1000rem;
+  height: 1050rem;
   position: absolute;
   left: 0;
   top: 0;
@@ -99,8 +118,8 @@ header#top-header div#top-header-imgs div#top-header-earth {
   background-color: #9c7149;
   position: absolute;
   top: 100%;
-  left: 10%;
-  transform: translateY(-15%);
+  left: 50%;
+  transform: translate(-50%, -15%);
 }
 header#top-header div#top-header-imgs div#top-header-plane-window {
   width: 400rem;
@@ -111,7 +130,7 @@ header#top-header div#top-header-imgs div#top-header-plane-window {
   box-shadow: 0 0 10rem 0 rgba(0, 0, 0, 0.5);
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-60%);
   right: 15%;
 }
 header#top-header div#top-header-imgs div#top-header-plane-window div.window {
@@ -167,15 +186,47 @@ header#top-header div#top-header-imgs div#top-header-plane-window div.window div
 }
 header#top-header div#top-header-title {
   position: absolute;
-  left: 200rem;
-  top: 300rem;
+  left: 300rem;
+  top: 250rem;
   background-color: #fff;
-  font-size: 70rem;
+  font-size: 80rem;
   font-weight: 600;
+}
+header#top-header div#top-header-title p {
+  position: relative;
+  display: flex;
+}
+header#top-header div#top-header-title p:first-child {
+  width: 50%;
+}
+header#top-header div#top-header-title p:last-child {
+  width: 100%;
+}
+header#top-header div#top-header-title span {
+  position: relative;
+}
+header#top-header div#top-header-title span.space {
+  width: 25rem;
+  background-color: black;
+}
+header#top-header div#top-header-title span.word {
+  overflow: hidden;
+  background-color: grey;
+}
+header#top-header div#top-header-title span.word i {
+  position: relative;
+  top: 90rem;
+}
+header#top-header div#top-header-text {
+  width: 700rem;
+  position: absolute;
+  top: 550rem;
+  left: 300rem;
+  font-size: 28rem;
 }
 header#top-header div#top-header-shadow {
   width: 100%;
-  height: 1000rem;
+  height: 1050rem;
   box-shadow: 0 -15rem 35rem -15rem rgba(129, 129, 129, 0.6) inset;
   position: absolute;
 }
@@ -189,8 +240,10 @@ section#mid-main div.mid-main-long-box {
   width: 1500rem;
   height: 450rem;
   border-radius: 30rem;
-  margin: 30rem 0;
+  margin: 40rem 0;
   background-color: #fff;
+  overflow: hidden;
+  position: relative;
 }
 section#mid-main div.mid-main-long-box div.long-box-shadow {
   border-radius: 30rem;
@@ -202,8 +255,10 @@ section#mid-main div.mid-main-short-box {
   width: 710rem;
   height: 450rem;
   border-radius: 30rem;
-  margin: 30rem 0;
+  margin: 40rem 0;
   background-color: #fff;
+  overflow: hidden;
+  position: relative;
 }
 section#mid-main div.mid-main-short-box div.short-box-shadow {
   border-radius: 30rem;
@@ -217,7 +272,36 @@ section#mid-main div.right-box {
 section#mid-main div.main-box-shadow {
   width: 100%;
   height: 100%;
-  box-shadow: 0 0 20rem 0 rgba(200, 200, 200, 0.4) inset;
+  box-shadow: 0 0 20rem 0 rgba(0, 0, 0, 0.4) inset;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+section#mid-main div#current-job img.apple-logo {
+  width: 350rem;
+  position: absolute;
+  top: 50%;
+  transform: translate(-20%, -50%);
+}
+section#mid-main div#current-job img.badge {
+  width: 260rem;
+  position: absolute;
+  right: 2%;
+  transform: translateY(-5%);
+}
+section#mid-main div#past-job img.abbott-logo {
+  width: 300rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -3%;
+}
+section#mid-main div#education img.donghua-logo {
+  width: 300rem;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: -3%;
 }
 footer {
   width: 1500rem;
