@@ -15,6 +15,9 @@ html {background-color: rgba(255, 240, 215, .1);}
 
 @center-width: 1500rem;
 
+@top-nav-btn-font: "Raleway", "Roboto", "Trebuchet MS", "Verdana", "Heiti SC";
+@top-header-title-font: "Merriweather", "Tahoma","Trebuchet MS", "Helvetica", "Yuanti SC" ; 
+
 // index style
 // 头部：头部导航栏 navigation
 nav#top-nav {
@@ -29,7 +32,7 @@ nav#top-nav {
     
 
     // 导航按钮样式 nav-btn
-    ul#top-nav-navBox {
+    ul#top-nav-btn-box {
         margin-left: 210rem;
 
         float: left;
@@ -44,7 +47,7 @@ nav#top-nav {
             float: left;
 
             font-size: 23rem;
-            font-family: "montserrat";
+            font-family: @top-nav-btn-font;
             color: #000;
             text-align: center;
 
@@ -52,10 +55,10 @@ nav#top-nav {
     }
 
     // 追踪部件样式 chase-gadget
-    div#top-nav-chaseBox {
+    div#top-nav-chase-box {
         width: @top-nav-height;
         height: @top-nav-height;
-        // background-color: #000;
+        background-color: #fff;
 
         float: left;
         position: absolute;
@@ -67,6 +70,7 @@ nav#top-nav {
             position: absolute;
             top: 50%;   left: 50%;
             transform: translate(-50%, -60%);
+            background-color: red;
 
         }
 
@@ -75,6 +79,7 @@ nav#top-nav {
             position: absolute;
             left: 50%;   transform: translateX(-50%);
             top: 20%;
+            background-color: blue;
         }
 
 
@@ -86,7 +91,7 @@ nav#top-nav {
     }
 
     // 分享区   shareBox
-    ul#top-nav-shareBox {
+    ul#top-nav-share-box {
         width: 200rem;
         height: @top-nav-height;
         background-color: #000;
@@ -251,70 +256,90 @@ header#top-header {
     }
 
     // 头部背景图上标题 top-header-title
-    div#top-header-title {
-
+    div#top-header-content {
         position: absolute;
         left: 300rem;   top: 250rem;
 
-
-        background-color: #fff;
-
-        font-size: 80rem;
-        font-weight: 600;
-
-        p {
+        div#top-header-title {
             position: relative;
-            display: flex;
-        }
-        p:first-child {
-            width: 50%;
-        }
-        p:last-child {
-            width: 100%;
-        }
-        span {
-            position: relative;
-            
-        }
-
-        span.space {
-            width: 25rem;
-            background-color: black;
-        }
-        span.word {
-            overflow: hidden;
-            background-color: grey;
-
-            i {
+    
+            background-color: #fff;
+    
+            font-size: 80rem;
+            font-weight: 500;
+            font-family: @top-header-title-font;
+    
+            p {
                 position: relative;
-                top: 90rem;
-                
-              // 这里要注意一点，因为父盒子span是inline没有高度，所以设置为100%的话会无法进行移动。
+                display: flex;
+            }
+            p:first-child {
+                width: 50%;
+            }
+            p:last-child {
+                width: 100%;
+            }
 
-              // 完全隐藏情况下 top值为 80rem，比字号大10rem
+            span {
+                position: relative;
+            }
+            span.space {
+                width: 30rem;
+                background-color: black;
+            }
+            span.word {
+                overflow: hidden;
+                background-color: grey;
+    
+                i {
+                    position: relative;
+                    top: 0rem;
+                    
+                  // 这里要注意一点，因为父盒子span是inline没有高度，所以设置为100%的话会无法进行移动。
+    
+                  // 完全隐藏情况下 top值为 80rem，比字号大10rem
+                }
             }
         }
-        // z-index: 99;    // at the top level of all
-    }
+    
+        div#top-header-text {
+            width: 600rem;
 
-    div#top-header-text {
-        width: 700rem;  
+            position: relative;
+            margin-top: 50rem;
+    
+            font-size: 30rem;
+            text-align: justify;
 
-        position: absolute;
-        top: 550rem;    left: 300rem;
+            div.tag-box {
+                margin-top: 20rem;
+                font-size: 25rem;
+                color: rgb(0, 62, 87);
+
+                span.hashtag {
+                    margin-right: 5rem;
+                }
+            }
 
 
-        font-size: 28rem;
+        }
     }
 
     // 头部背景阴影
-    div#top-header-shadow {
-        width: 100%;    height: @header-img-height;
-        box-shadow: 0 -15rem 35rem -15rem rgba(129, 129, 129, 0.6) inset;
+    // div#top-header-shadow {
+    //     width: 100%;    height: @header-img-height;
+    //     box-shadow: 0 -15rem 35rem -15rem rgba(129, 129, 129, 0.6) inset;
         
-        position: absolute;
-    }
+    //     position: absolute;
+    // }
 
+}
+// 头部：阴影
+header#top-header::after {
+    content: "";
+    width: 100%;    height: @header-img-height;
+    box-shadow: 0 -15rem 35rem -15rem rgba(129, 129, 129, 0.6) inset;
+    position: absolute;
 }
 
 section#mid-main {
@@ -396,6 +421,27 @@ section#mid-main {
             transform: translate(-20%, -50%);
         }
 
+        div.current-job-content {
+            position: absolute;
+            top: 50%;   left:30%;
+            transform: translate(0, -50%);
+
+            div.job-company {
+                font-size: 90rem;
+                font-weight: 600;
+                margin-bottom: 20rem;
+            }
+
+            div.job-title {
+                font-size: 60rem;
+            }
+
+            div.job-location,
+            div.job-duration {
+                font-size: 30rem;
+            }
+        }
+
         img.badge {
             width: 260rem;
             position: absolute;
@@ -405,24 +451,35 @@ section#mid-main {
         }
     }
 
-    // 上一份工作 past job
-    div#past-job {
-        img.abbott-logo {
-            width: 300rem;
-            position: absolute;
-            top: 50%;   transform: translateY(-50%);
-            right: -3%;
+    div.short-box-content {
+        position: absolute;
+        top: 50%;   left: 3%;
+        transform: translateY(-50%);
+
+        div.short-box-text-1 {
+            font-size: 60rem;
+            font-weight: 800;
+            margin-bottom: 30rem;
+        }
+
+        div.short-box-text-2,
+        div.short-box-text-3,
+        div.short-box-text-4 {
+            font-size: 30rem;
         }
     }
 
-    div#education {
-        img.donghua-logo {
-            width: 300rem;
-            position: absolute;
-            top: 50%;   transform: translateY(-50%);
-            right: -3%;
-        }
+    img.short-box-img {
+        width: 300rem;
+
+        position: absolute;
+        top: 50%;   right: -3%;
+        transform: translateY(-50%);
+
     }
+    
+
+    
 }
 
 

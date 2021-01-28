@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JeromeGuan</title>
     <link rel="stylesheet" href="./css/index.css">
+    <script src="./js/index.js"></script>
 </head>
 <body>
 
@@ -12,7 +13,7 @@
     <!-- 头部：导航栏 -->
     <nav id="top-nav">
 
-        <ul id="top-nav-navBox">
+        <ul id="top-nav-btn-box">
             <li class="top-nav-btn">
                 #Jerome
             </li>
@@ -24,7 +25,7 @@
             </li>
         </ul>
 
-        <div id="top-nav-chaseBox">
+        <div id="top-nav-chase-box">
             <div class="top-nav-chase-earth">
                 <img src="./img/gadget-earth.png" alt="">
             </div>
@@ -33,7 +34,7 @@
             </div>
         </div>
 
-        <ul id="top-nav-shareBox">
+        <ul id="top-nav-share-box">
             
         </ul>
 
@@ -42,10 +43,12 @@
     <!-- 头部：头部大图 -->
     <header id="top-header">
 
+        <!-- 【预留】头部：背景大图 -->
         <div id="top-header-bg">
 
         </div>
 
+        <!-- 头部：组件 -->
         <div id="top-header-imgs">
             <!-- 从左至右，从上至下 -->
 
@@ -68,34 +71,41 @@
 
         </div>
 
-        <div id="top-header-title">
-            <p>
-                <span class="word"><i>Hi</i></span>
-                <span class="space"></span>
-                <span class="word"><i>there</i></span>
-                <span class="word"><i>,</i></span>
-                <br/>
-            </p>
-            <p>
-                <span class="word"><i>l'm</i></span>
-                <span class="space"></span>
-                <span class="word"><i>Jerome</i></span>
-                <span class="space"></span>
-                <span class="word"><i>Guan</i></span>
-                <span class="word"><i>.</i></span>
-            </p>
-        </div>
+        <!-- 头部：文本内容 -->
+        <div id="top-header-content">
 
-        <div id="top-header-text">
-            My major is Bioengineering, and have interships of Marketing and Project Management. A half web developer. 
-            <div class="tag-box">
-                <span class="hashtag">#self-motivated</span>
-                <span class="hashtag">#programing</span>
-                <span class="hashtag">#love-sharing</span>
+            <!-- 头部：Hi there, ... -->
+            <div id="top-header-title">
+                <p>
+                    <span class="word"><i>Hi</i></span>
+                    <span class="space"></span>
+                    <span class="word"><i>there</i></span>
+                    <span class="word"><i>,</i></span>
+                    <br/>
+                </p>
+                <p>
+                    <span class="word"><i>l'm</i></span>
+                    <span class="space"></span>
+                    <span class="word"><i>Jerome</i></span>
+                    <span class="space"></span>
+                    <span class="word"><i>Guan</i></span>
+                    <span class="word"><i>.</i></span>
+                </p>
+            </div>
+
+            <!-- 头部：自我介绍 + 标签 -->
+            <div id="top-header-text">
+                My major is Bioengineering, and have internships of Marketing and Project Management. A half web developer. 
+                <div class="tag-box">
+                    <span class="hashtag">#self-motivated</span>
+                    <span class="hashtag">#programing</span>
+                    <span class="hashtag">#love-sharing</span>
+                </div>
             </div>
         </div>
 
-        <div id="top-header-shadow"></div>
+        <!-- 【固定装饰】头部：最上层阴影
+        <div id="top-header-shadow"></div> -->
 
     </header>
     <!-- 头部结束 -->
@@ -105,7 +115,18 @@
         <div id="current-job" class="mid-main-long-box">
             <img src="./img/apple-logo.png" alt="" class="apple-logo">
             <div class="current-job-content">
-
+                <div class="job-company">
+                    Apple Inc.
+                </div>
+                <div class="job-title">
+                    Wallet & Payment
+                </div>
+                <div class="job-location">
+                    Shanghai, China
+                </div>
+                <div class="job-duration">
+                    Jun.2020 - 
+                </div>
             </div>
             <img src="./img/badge3.png" alt="" class="badge">
 
@@ -115,14 +136,41 @@
 
         <div class="short-box-container">
             <div id="past-job" class="mid-main-short-box left-box">
-
-                <img src="./img/abbott-logo.png" alt="" class="abbott-logo">
+                <div class="past-job-content short-box-content">
+                    <div class="job-company short-box-text-1">
+                        Abbott
+                    </div>
+                    <div class="job-title short-box-text-2">
+                        Digital Marketing
+                    </div>
+                    <div class="job-location short-box-text-3">
+                        Shanghai, China
+                    </div>
+                    <div class="job-duration short-box-text-4">
+                        Jun.2019 - Dec.2019
+                    </div>
+                </div>
+                <img src="./img/abbott-logo.png" alt="" class="abbott-logo short-box-img">
                 <!-- 短盒子内阴影 -->
                 <div class="main-box-shadow short-box-shadow"></div>
             </div>
     
             <div id="education" class="mid-main-short-box right-box">
-                <img src="./img/donghua-logo.png" alt="" class="donghua-logo">
+                <div class="education-content short-box-content">
+                    <div class="edu-school short-box-text-1">
+                        Donghua Univ.
+                    </div>
+                    <div class="edu-degree short-box-text-2">
+                        Bachelor of Engineering
+                    </div>
+                    <div class="edu-location short-box-text-3">
+                        Shanghai, China
+                    </div>
+                    <div class="edu-period short-box-text-4">
+                        Sep.2015 - Jun.2019
+                    </div>
+                </div>
+                <img src="./img/donghua-logo.png" alt="" class="donghua-logo short-box-img">
                 <!-- 短盒子内阴影 -->
                 <div class="main-box-shadow short-box-shadow"></div>
             </div>
