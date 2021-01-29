@@ -18,6 +18,18 @@ html {background-color: rgba(255, 240, 215, .1);}
 @top-nav-btn-font: "Raleway", "Roboto", "Trebuchet MS", "Verdana", "Heiti SC";
 @top-header-title-font: "Merriweather", "Tahoma","Trebuchet MS", "Helvetica", "Yuanti SC" ; 
 
+
+// shade style
+div.shade {
+    width: 100%;    height: 100%;
+    position: fixed;
+    font-size: 100rem;
+    color: #fff;
+    background-color: black;
+    z-index: 999;
+
+}
+
 // index style
 // 头部：头部导航栏 navigation
 nav#top-nav {
@@ -58,7 +70,7 @@ nav#top-nav {
     div#top-nav-chase-box {
         width: @top-nav-height;
         height: @top-nav-height;
-        background-color: #fff;
+        // background-color: #fff;
 
         float: left;
         position: absolute;
@@ -70,8 +82,7 @@ nav#top-nav {
             position: absolute;
             top: 50%;   left: 50%;
             transform: translate(-50%, -60%);
-            background-color: red;
-
+            // background-color: red;
         }
 
         div.top-nav-chase-plane {
@@ -79,13 +90,12 @@ nav#top-nav {
             position: absolute;
             left: 50%;   transform: translateX(-50%);
             top: 20%;
-            background-color: blue;
+            // background-color: blue;
         }
 
 
         img {
             width: 100%;    height: 100%;
-
         }
 
     }
@@ -263,7 +273,7 @@ header#top-header {
         div#top-header-title {
             position: relative;
     
-            background-color: #fff;
+            // background-color: #fff;
     
             font-size: 80rem;
             font-weight: 500;
@@ -285,15 +295,15 @@ header#top-header {
             }
             span.space {
                 width: 30rem;
-                background-color: black;
+                // background-color: black;
             }
             span.word {
                 overflow: hidden;
-                background-color: grey;
+                // background-color: grey;
     
                 i {
                     position: relative;
-                    top: 0rem;
+                    top: 80rem;
                     
                   // 这里要注意一点，因为父盒子span是inline没有高度，所以设置为100%的话会无法进行移动。
     

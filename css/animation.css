@@ -1,0 +1,29 @@
+@keyframes wordFadeUp {
+  to {
+    top: 0;
+  }
+}
+header#top-header div#top-header-content div#top-header-title i {
+  animation: wordFadeUp 400ms ease-in forwards;
+}
+header#top-header div#top-header-content div#top-header-title i.word-1 {
+  animation-delay: 150ms;
+}
+header#top-header div#top-header-content div#top-header-title i.word-2 {
+  animation-delay: 300ms;
+}
+header#top-header div#top-header-content div#top-header-title i.word-3 {
+  animation-delay: 450ms;
+}
+header#top-header div#top-header-content div#top-header-title i.word-4 {
+  animation-delay: 600ms;
+}
+header#top-header div#top-header-content div#top-header-title i.word-5 {
+  animation-delay: 750ms;
+}
+header#top-header div#top-header-content div#top-header-title i.word-6 {
+  animation-delay: 900ms;
+}
+header#top-header div#top-header-content div#top-header-title i.word-7 {
+  animation-delay: 1050ms;
+}

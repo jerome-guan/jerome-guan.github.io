@@ -29,6 +29,15 @@ body {
 html {
   background-color: rgba(255, 240, 215, 0.1);
 }
+div.shade {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  font-size: 100rem;
+  color: #fff;
+  background-color: black;
+  z-index: 999;
+}
 nav#top-nav {
   width: 100%;
   height: 70rem;
@@ -57,7 +66,6 @@ nav#top-nav ul#top-nav-btn-box li.top-nav-btn {
 nav#top-nav div#top-nav-chase-box {
   width: 70rem;
   height: 70rem;
-  background-color: #fff;
   float: left;
   position: absolute;
   top: 50%;
@@ -71,7 +79,6 @@ nav#top-nav div#top-nav-chase-box div.top-nav-chase-earth {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -60%);
-  background-color: red;
 }
 nav#top-nav div#top-nav-chase-box div.top-nav-chase-plane {
   width: 52rem;
@@ -80,7 +87,6 @@ nav#top-nav div#top-nav-chase-box div.top-nav-chase-plane {
   left: 50%;
   transform: translateX(-50%);
   top: 20%;
-  background-color: blue;
 }
 nav#top-nav div#top-nav-chase-box img {
   width: 100%;
@@ -194,7 +200,6 @@ header#top-header div#top-header-content {
 }
 header#top-header div#top-header-content div#top-header-title {
   position: relative;
-  background-color: #fff;
   font-size: 80rem;
   font-weight: 500;
   font-family: "Merriweather", "Tahoma", "Trebuchet MS", "Helvetica", "Yuanti SC";
@@ -214,15 +219,13 @@ header#top-header div#top-header-content div#top-header-title span {
 }
 header#top-header div#top-header-content div#top-header-title span.space {
   width: 30rem;
-  background-color: black;
 }
 header#top-header div#top-header-content div#top-header-title span.word {
   overflow: hidden;
-  background-color: grey;
 }
 header#top-header div#top-header-content div#top-header-title span.word i {
   position: relative;
-  top: 0rem;
+  top: 80rem;
 }
 header#top-header div#top-header-content div#top-header-text {
   width: 600rem;

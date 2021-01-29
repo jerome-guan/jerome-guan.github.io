@@ -5,13 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JeromeGuan</title>
     <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/animation.css">
     <script src="./js/index.js"></script>
 </head>
 <body>
 
     <!-- 头部：导航栏 + 头部大图 -->
     <!-- 头部：导航栏 -->
-    <nav id="top-nav">
+    <div class="shade"> test </div>
+    <nav id="top-nav"> 
 
         <ul id="top-nav-btn-box">
             <li class="top-nav-btn">
@@ -77,19 +79,19 @@
             <!-- 头部：Hi there, ... -->
             <div id="top-header-title">
                 <p>
-                    <span class="word"><i>Hi</i></span>
+                    <span class="word"><i class="word-1">Hi</i></span>
                     <span class="space"></span>
-                    <span class="word"><i>there</i></span>
-                    <span class="word"><i>,</i></span>
+                    <span class="word"><i class="word-2">there</i></span>
+                    <span class="word"><i class="word-3">,</i></span>
                     <br/>
                 </p>
                 <p>
-                    <span class="word"><i>l'm</i></span>
+                    <span class="word"><i class="word-4">l'm</i></span>
                     <span class="space"></span>
-                    <span class="word"><i>Jerome</i></span>
+                    <span class="word"><i class="word-5">Jerome</i></span>
                     <span class="space"></span>
-                    <span class="word"><i>Guan</i></span>
-                    <span class="word"><i>.</i></span>
+                    <span class="word"><i class="word-6">Guan</i></span>
+                    <span class="word"><i class="word-7">.</i></span>
                 </p>
             </div>
 
@@ -202,22 +204,4 @@
     </footer>
     
 </body>
-    <!-- 仅用以改变html字体 -->
-    <script>
-        window.onload = function() {
-            console.log(document.documentElement.clientWidth);
-            function refreshRem(designWidth) {
-                let winWidth = document.documentElement.offsetWidth;
-                document.documentElement.style.fontSize = winWidth / designWidth + 'px';
-            }
-            refreshRem(1920);
-            window.addEventListener('resize', function() {
-                refreshRem(1920);
-            })
-            console.log(document.documentElement.clientWidth);
-            console.log(document.documentElement.clientHeight);
-        }
-        
-        console.log(document.querySelector('#topheader'))
-    </script>
 </html>
