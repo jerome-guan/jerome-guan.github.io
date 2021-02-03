@@ -95,8 +95,12 @@ nav#top-nav div#top-nav-chase-box img {
 nav#top-nav ul#top-nav-share-box {
   width: 200rem;
   height: 70rem;
-  background-color: #000;
+  line-height: 70rem;
   margin-right: 210rem;
+  font-size: 23rem;
+  font-family: "Raleway", "Roboto", "Trebuchet MS", "Verdana", "Heiti SC";
+  color: #000;
+  text-align: center;
   float: right;
 }
 header#top-header {
