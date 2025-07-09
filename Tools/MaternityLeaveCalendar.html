@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <title>Maternity Leave Calendar (产假日历系统)</title>
+  <style>
+    /* Basic reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      padding: 10px;
+      background-color: #f5f5f5;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      overflow-x: hidden;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 15px;
+      color: #333;
+      font-size: 1.5rem;
+    }
+
+    /* Configuration panel */
+    .config-panel {
+      background-color: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+
+    .config-panel h2 {
+      margin-bottom: 15px;
+      color: #444;
+      font-size: 1.2rem;
+    }
+
+    .config-panel h3 {
+      margin: 15px 0 10px;
+      font-size: 1.1rem;
+    }
+
+    .form-group {
+      margin-bottom: 12px;
+      width: 100%;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .form-group input[type="date"],
+    .form-group input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 16px; /* Prevents iOS zoom on focus */
+    }
+
+    .form-group input[type="color"] {
+      width: 44px;
+      height: 44px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .color-picker-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .color-label {
+      flex: 1;
+      font-size: 0.9rem;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background-color 0.3s;
+      width: 100%;
+      margin-top: 10px;
+      -webkit-appearance: none; /* Fixes rendering on iOS */
+    }
+
+    button:hover, button:active {
+      background-color: #45a049;
+    }
+
+    /* Leave count display */
+    .leave-count-display {
+      margin: 15px 0;
+      padding: 10px;
+      background-color: #f0f0f0;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .leave-count-item {
+      padding: 8px 12px;
+      margin: 5px;
+      background-color: white;
+      border-radius: 4px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .leave-count-label {
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    #annual-leave-count {
+      color: #FFC107;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    #sick-leave-count {
+      color: #FF9800;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+
+    /* Calendar view */
+    .calendar-container {
+      margin-top: 15px;
+      overflow-x: auto; /* Allow horizontal scrolling if needed */
+    }
+
+    .calendar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .month-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .month-selector h2 {
+      font-size: 1.2rem;
+      margin: 0 10px;
+    }
+
+    .month-selector button {
+      background-color: #f0f0f0;
+      color: #333;
+      border: 1px solid #ddd;
+      padding: 10px 15px;
+      width: auto;
+      margin: 0;
+      min-width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .month-selector button:hover, .month-selector button:active {
+      background-color: #e0e0e0;
+    }
+
+    .calendar {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    .calendar th {
+      background-color: #f0f0f0;
+      padding: 8px 2px;
+      text-align: center;
+      border: 1px solid #ddd;
+      font-size: 0.8rem;
+    }
+
+    .calendar td {
+      height: 60px;
+      width: 14.28%;
+      border: 1px solid #ddd;
+      vertical-align: top;
+      padding: 3px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .date-number {
+      font-weight: bold;
+      margin-bottom: 3px;
+      font-size: 0.9rem;
+    }
+
+    .leave-count {
+      font-size: 12px;
+      position: absolute;
+      bottom: 3px;
+      right: 3px;
+    }
+
+    .leave-type {
+      font-size: 10px;
+      margin-top: 3px;
+    }
+
+    /* Media queries for responsive design */
+    @media screen and (max-width: 600px) {
+      .calendar td {
+        height: 50px;
+        padding: 2px;
+      }
+
+      .date-number {
+        font-size: 0.8rem;
+        margin-bottom: 2px;
+      }
+
+      .leave-count {
+        font-size: 10px;
+      }
+
+      .leave-type {
+        font-size: 9px;
+      }
+
+      .calendar th {
+        padding: 5px 1px;
+        font-size: 0.7rem;
+      }
+    }
+
+    /* Legend */
+    .legend {
+      margin-top: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-bottom: 5px;
+      padding: 4px 8px;
+      background-color: #f9f9f9;
+      border-radius: 4px;
+    }
+
+    .legend-item span {
+      font-size: 0.8rem;
+    }
+
+    .legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      flex-shrink: 0;
+    }
+
+    /* Additional media queries */
+    @media screen and (max-width: 480px) {
+      body {
+        padding: 5px;
+      }
+
+      .container {
+        padding: 10px;
+        border-radius: 5px;
+      }
+
+      h1 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .config-panel {
+        padding: 10px;
+      }
+
+      .config-panel h2 {
+        font-size: 1.1rem;
+      }
+
+      .config-panel h3 {
+        font-size: 1rem;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .form-group {
+        margin-bottom: 8px;
+      }
+
+      .legend-item {
+        padding: 3px 6px;
+      }
+
+      .legend-item span {
+        font-size: 0.7rem;
+      }
+
+      .leave-count-display {
+        margin: 10px 0;
+        padding: 8px;
+      }
+
+      .leave-count-item {
+        padding: 6px 10px;
+        margin: 3px;
+        width: calc(50% - 6px);
+      }
+
+      .leave-count-label {
+        font-size: 0.8rem;
+      }
+
+      #annual-leave-count, #sick-leave-count {
+        font-size: 1rem;
+      }
+    }
+
+    /* iOS Safari specific fixes */
+    @supports (-webkit-touch-callout: none) {
+      /* Enable momentum scrolling */
+      body {
+        -webkit-overflow-scrolling: touch;
+      }
+
+      /* Fix for iOS input styling */
+      input {
+        -webkit-appearance: none;
+        border-radius: 4px;
+      }
+
+      /* Fix for iOS date inputs */
+      input[type="date"] {
+        min-height: 44px;
+        line-height: normal;
+      }
+
+      /* Fix for iOS button styling */
+      button {
+        cursor: pointer;
+        -webkit-touch-callout: none;
+      }
+
+      /* Fix for iOS tap delay */
+      a, button, input, select, textarea, label {
+        touch-action: manipulation;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>Maternity Leave Calendar (产假日历系统)</h1>
+
+  <!-- Configuration Panel -->
+  <div class="config-panel">
+    <h2>假期配置</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="start-date">开始请假日期</label>
+        <input type="date" id="start-date" min="2025-07-01" max="2026-08-31">
+      </div>
+      <div class="form-group">
+        <label for="maternity-days">产假天数</label>
+        <input type="number" id="maternity-days" value="98" min="0">
+      </div>
+      <div class="form-group">
+        <label for="regional-bonus-days">地区奖励假天数</label>
+        <input type="number" id="regional-bonus-days" value="60" min="0">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <div class="checkbox-group">
+          <input type="checkbox" id="c-section-checkbox">
+          <label for="c-section-checkbox">剖腹产</label>
+        </div>
+        <input type="number" id="c-section-days" value="15" min="0">
+      </div>
+      <div class="form-group">
+        <div class="checkbox-group">
+          <input type="checkbox" id="high-risk-checkbox">
+          <label for="high-risk-checkbox">高危产妇</label>
+        </div>
+        <input type="number" id="high-risk-days" value="15" min="0">
+      </div>
+    </div>
+
+    <h3>假期颜色设置</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <div class="color-picker-container">
+          <span class="color-label">产假</span>
+          <input type="color" id="maternity-color" value="#4CAF50">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="color-picker-container">
+          <span class="color-label">剖腹产奖励假</span>
+          <input type="color" id="c-section-color" value="#9C27B0">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="color-picker-container">
+          <span class="color-label">高危产妇假</span>
+          <input type="color" id="high-risk-color" value="#F44336">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <div class="color-picker-container">
+          <span class="color-label">地区奖励假</span>
+          <input type="color" id="regional-bonus-color" value="#2196F3">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="color-picker-container">
+          <span class="color-label">年假</span>
+          <input type="color" id="annual-leave-color" value="#FFC107">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="color-picker-container">
+          <span class="color-label">病假</span>
+          <input type="color" id="sick-leave-color" value="#FF9800">
+        </div>
+      </div>
+    </div>
+
+    <!-- Leave Count Display -->
+    <div class="leave-count-display">
+      <div class="leave-count-item">
+        <span class="leave-count-label">年假天数：</span>
+        <span id="annual-leave-count">0</span>
+      </div>
+      <div class="leave-count-item">
+        <span class="leave-count-label">病假天数：</span>
+        <span id="sick-leave-count">0</span>
+      </div>
+    </div>
+
+    <button id="calculate-btn">计算假期</button>
+  </div>
+
+  <!-- Calendar View -->
+  <div class="calendar-container">
+    <div class="calendar-header">
+      <div class="month-selector">
+        <button id="prev-month">&lt;</button>
+        <h2 id="current-month">2025年7月</h2>
+        <button id="next-month">&gt;</button>
+      </div>
+    </div>
+
+    <table class="calendar">
+      <thead>
+      <tr>
+        <th>周一</th>
+        <th>周二</th>
+        <th>周三</th>
+        <th>周四</th>
+        <th>周五</th>
+        <th>周六</th>
+        <th>周日</th>
+      </tr>
+      </thead>
+      <tbody id="calendar-body">
+      <!-- Calendar cells will be generated by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Legend -->
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #4CAF50;"></div>
+      <span>产假</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #9C27B0;"></div>
+      <span>剖腹产奖励假</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #F44336;"></div>
+      <span>高危产妇假</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #2196F3;"></div>
+      <span>地区奖励假</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #FFC107;"></div>
+      <span>年假</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-color" style="background-color: #FF9800;"></div>
+      <span>病假</span>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Maternity Leave Calendar JavaScript
+
+  // Constants for date range
+  const START_YEAR = 2025;
+  const START_MONTH = 6; // July (0-indexed)
+  const END_YEAR = 2026;
+  const END_MONTH = 7; // August (0-indexed)
+
+  // Public holidays
+  const PUBLIC_HOLIDAYS = [
+    { date: new Date(2026, 5, 19), name: "端午节" },
+    { date: new Date(2025, 9, 6), name: "中秋节" },
+    { date: new Date(2025, 9, 4), name: "国庆节" },
+    { date: new Date(2025, 9, 5), name: "国庆节" },
+    { date: new Date(2025, 9, 7), name: "国庆节" },
+    { date: new Date(2025, 9, 8), name: "国庆节" },
+    { date: new Date(2026, 0, 1), name: "元旦节" },
+    { date: new Date(2026, 1, 16), name: "春节" },
+    { date: new Date(2026, 1, 17), name: "春节" },
+    { date: new Date(2026, 1, 18), name: "春节" },
+    { date: new Date(2026, 1, 19), name: "春节" },
+    { date: new Date(2026, 3, 5), name: "清明节" },
+    { date: new Date(2026, 4, 1), name: "劳动节" },
+    { date: new Date(2026, 4, 2), name: "劳动节" },
+    { date: new Date(2025, 9, 1), name: "国庆节" },
+    { date: new Date(2025, 9, 2), name: "国庆节" },
+    { date: new Date(2025, 9, 3), name: "国庆节" }
+  ];
+
+  // Global variables
+  let currentYear = START_YEAR;
+  let currentMonth = START_MONTH;
+  let leaveData = {}; // Store leave data for each date
+  let userDefinedLeaves = {}; // Store user-defined annual and sick leaves
+  let annualLeaveCount = 0; // Track total annual leave days
+  let sickLeaveCount = 0; // Track total sick leave days
+
+  // DOM elements
+  const calendarBody = document.getElementById('calendar-body');
+  const currentMonthElement = document.getElementById('current-month');
+  const prevMonthButton = document.getElementById('prev-month');
+  const nextMonthButton = document.getElementById('next-month');
+  const calculateButton = document.getElementById('calculate-btn');
+
+  // Update the leave count display
+  function updateLeaveCountDisplay() {
+    document.getElementById('annual-leave-count').textContent = annualLeaveCount;
+    document.getElementById('sick-leave-count').textContent = sickLeaveCount;
+  }
+
+  // Initialize leave counts based on existing data
+  function initializeLeaveCounters() {
+    annualLeaveCount = 0;
+    sickLeaveCount = 0;
+
+    // Count existing annual and sick leaves
+    for (const dateString in userDefinedLeaves) {
+      if (userDefinedLeaves[dateString] === 'annual') {
+        annualLeaveCount++;
+      } else if (userDefinedLeaves[dateString] === 'sick') {
+        sickLeaveCount++;
+      }
+    }
+
+    updateLeaveCountDisplay();
+  }
+
+  // Initialize the calendar
+  document.addEventListener('DOMContentLoaded', function() {
+    renderCalendar(currentYear, currentMonth);
+    setupEventListeners();
+    initializeLeaveCounters(); // Initialize leave counters and display
+  });
+
+  // Set up event listeners
+  function setupEventListeners() {
+    prevMonthButton.addEventListener('click', navigateToPreviousMonth);
+    nextMonthButton.addEventListener('click', navigateToNextMonth);
+    calculateButton.addEventListener('click', calculateLeaves);
+  }
+
+  // Navigate to previous month
+  function navigateToPreviousMonth() {
+    if (currentYear === START_YEAR && currentMonth === START_MONTH) {
+      return; // Don't go before July 2025
+    }
+
+    currentMonth--;
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
+    }
+
+    renderCalendar(currentYear, currentMonth);
+  }
+
+  // Navigate to next month
+  function navigateToNextMonth() {
+    if (currentYear === END_YEAR && currentMonth === END_MONTH) {
+      return; // Don't go after May 2026
+    }
+
+    currentMonth++;
+    if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    }
+
+    renderCalendar(currentYear, currentMonth);
+  }
+
+  // Render the calendar for a specific month
+  function renderCalendar(year, month) {
+    // Update the current month display
+    const monthNames = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+    currentMonthElement.textContent = `${year}年${monthNames[month]}`;
+
+    // Clear the calendar
+    calendarBody.innerHTML = '';
+
+    // Get the first day of the month (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+    const firstDay = new Date(year, month, 1).getDay();
+    // Adjust for Monday as first day of week (0 = Monday, 1 = Tuesday, ..., 6 = Sunday)
+    const firstDayAdjusted = (firstDay === 0) ? 6 : firstDay - 1;
+
+    // Get the number of days in the month
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    // Create calendar rows
+    let date = 1;
+    for (let i = 0; i < 6; i++) { // Maximum 6 rows
+      // Create a row
+      const row = document.createElement('tr');
+
+      // Create cells for each day of the week
+      for (let j = 0; j < 7; j++) {
+        const cell = document.createElement('td');
+
+        if (i === 0 && j < firstDayAdjusted) {
+          // Empty cells before the first day of the month
+          cell.textContent = '';
+        } else if (date > daysInMonth) {
+          // Empty cells after the last day of the month
+          cell.textContent = '';
+        } else {
+          // Create the date cell
+          const dateObj = new Date(year, month, date);
+          const dateString = formatDate(dateObj);
+
+          // Create date number element
+          const dateNumber = document.createElement('div');
+          dateNumber.className = 'date-number';
+          dateNumber.textContent = date;
+          cell.appendChild(dateNumber);
+
+          // Add data attribute for date
+          cell.setAttribute('data-date', dateString);
+
+          // Check if this date has leave data
+          if (leaveData[dateString]) {
+            // Set background color based on leave type
+            cell.style.backgroundColor = leaveData[dateString].color;
+
+            // Add leave count if applicable
+            if (leaveData[dateString].count) {
+              const leaveCount = document.createElement('div');
+              leaveCount.className = 'leave-count';
+              leaveCount.textContent = leaveData[dateString].count;
+              cell.appendChild(leaveCount);
+            }
+
+            // Add leave type text if it's annual or sick leave
+            if (leaveData[dateString].type === 'annual' || leaveData[dateString].type === 'sick') {
+              const leaveType = document.createElement('div');
+              leaveType.className = 'leave-type';
+              leaveType.textContent = leaveData[dateString].type === 'annual' ? '年假' : '病假';
+              cell.appendChild(leaveType);
+            }
+          }
+
+          // Check if this is a public holiday
+          const isHoliday = PUBLIC_HOLIDAYS.some(holiday =>
+                  holiday.date.getFullYear() === dateObj.getFullYear() &&
+                  holiday.date.getMonth() === dateObj.getMonth() &&
+                  holiday.date.getDate() === dateObj.getDate()
+          );
+
+          // Check if this is October 11, 2025 (working day)
+          const isWorkingDay = dateObj.getFullYear() === 2025 &&
+                  dateObj.getMonth() === 9 &&
+                  dateObj.getDate() === 11;
+
+          if (isHoliday) {
+            // Mark public holidays
+            cell.style.color = 'red';
+            const holidayInfo = PUBLIC_HOLIDAYS.find(holiday =>
+                    holiday.date.getFullYear() === dateObj.getFullYear() &&
+                    holiday.date.getMonth() === dateObj.getMonth() &&
+                    holiday.date.getDate() === dateObj.getDate()
+            );
+
+            const holidayName = document.createElement('div');
+            holidayName.className = 'leave-type';
+            holidayName.textContent = holidayInfo.name;
+            holidayName.style.color = 'red';
+            cell.appendChild(holidayName);
+          } else if (isWorkingDay) {
+            // Mark October 11, 2025 as a working day
+            const workingDayLabel = document.createElement('div');
+            workingDayLabel.className = 'leave-type';
+            workingDayLabel.textContent = '工作日';
+            workingDayLabel.style.color = 'blue';
+            cell.appendChild(workingDayLabel);
+          }
+
+          // Add click event to toggle annual/sick leave
+          cell.addEventListener('click', function() {
+            toggleUserDefinedLeave(dateString);
+          });
+
+          date++;
+        }
+
+        row.appendChild(cell);
+      }
+
+      calendarBody.appendChild(row);
+
+      // Stop if we've displayed all days of the month
+      if (date > daysInMonth) {
+        break;
+      }
+    }
+  }
+
+  // Toggle user-defined annual/sick leave
+  function toggleUserDefinedLeave(dateString) {
+    // If there's already calculated leave data for this date, don't allow changes
+    if (leaveData[dateString] &&
+            (leaveData[dateString].type !== 'annual' &&
+                    leaveData[dateString].type !== 'sick' &&
+                    leaveData[dateString].type !== undefined)) {
+      return;
+    }
+
+    // Create a context menu for selecting leave type
+    const existingMenu = document.querySelector('.leave-context-menu');
+    if (existingMenu) {
+      existingMenu.remove();
+    }
+
+    const contextMenu = document.createElement('div');
+    contextMenu.className = 'leave-context-menu';
+    contextMenu.style.position = 'fixed';
+    contextMenu.style.backgroundColor = 'white';
+    contextMenu.style.border = '1px solid #ddd';
+    contextMenu.style.borderRadius = '8px';
+    contextMenu.style.padding = '8px';
+    contextMenu.style.boxShadow = '0 4px 10px rgba(0,0,0,0.2)';
+    contextMenu.style.zIndex = '1000';
+    contextMenu.style.width = 'auto';
+    contextMenu.style.minWidth = '150px';
+
+    // Get cell position
+    const cell = document.querySelector(`td[data-date="${dateString}"]`);
+    const rect = cell.getBoundingClientRect();
+
+    // Calculate position to ensure menu is visible on screen
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    // Default position (below the cell)
+    let left = rect.left;
+    let top = rect.bottom + 5;
+
+    // Check if menu would go off the right edge
+    if (left + 150 > windowWidth) {
+      left = windowWidth - 160;
+    }
+
+    // Check if menu would go off the bottom edge
+    if (top + 150 > windowHeight) {
+      top = rect.top - 150; // Position above the cell
+    }
+
+    // Ensure menu is not positioned off the left or top edge
+    left = Math.max(10, left);
+    top = Math.max(10, top);
+
+    contextMenu.style.left = `${left}px`;
+    contextMenu.style.top = `${top}px`;
+
+    // Create option styles for better touch interaction
+    const optionStyle = `
+        padding: 12px 15px;
+        cursor: pointer;
+        border-bottom: 1px solid #eee;
+        font-size: 16px;
+        text-align: center;
+        transition: background-color 0.2s;
+    `;
+
+    // Add options
+    const annualLeaveOption = document.createElement('div');
+    annualLeaveOption.textContent = '年假';
+    annualLeaveOption.style.cssText = optionStyle;
+    annualLeaveOption.addEventListener('click', function() {
+      setUserDefinedLeave(dateString, 'annual');
+      contextMenu.remove();
+    });
+
+    const sickLeaveOption = document.createElement('div');
+    sickLeaveOption.textContent = '病假';
+    sickLeaveOption.style.cssText = optionStyle;
+    sickLeaveOption.addEventListener('click', function() {
+      setUserDefinedLeave(dateString, 'sick');
+      contextMenu.remove();
+    });
+
+    const clearOption = document.createElement('div');
+    clearOption.textContent = '清除';
+    clearOption.style.cssText = optionStyle;
+    clearOption.style.borderBottom = 'none';
+    clearOption.addEventListener('click', function() {
+      setUserDefinedLeave(dateString, null);
+      contextMenu.remove();
+    });
+
+    // Add touch feedback
+    const addTouchFeedback = (element) => {
+      element.addEventListener('touchstart', function() {
+        this.style.backgroundColor = '#f0f0f0';
+      });
+      element.addEventListener('touchend', function() {
+        this.style.backgroundColor = 'transparent';
+      });
+      element.addEventListener('mousedown', function() {
+        this.style.backgroundColor = '#f0f0f0';
+      });
+      element.addEventListener('mouseup', function() {
+        this.style.backgroundColor = 'transparent';
+      });
+    };
+
+    addTouchFeedback(annualLeaveOption);
+    addTouchFeedback(sickLeaveOption);
+    addTouchFeedback(clearOption);
+
+    contextMenu.appendChild(annualLeaveOption);
+    contextMenu.appendChild(sickLeaveOption);
+    contextMenu.appendChild(clearOption);
+
+    document.body.appendChild(contextMenu);
+
+    // Close menu when clicking/touching outside
+    const closeMenu = function(e) {
+      if (!contextMenu.contains(e.target) && e.target !== cell) {
+        contextMenu.remove();
+        document.removeEventListener('click', closeMenu);
+        document.removeEventListener('touchstart', closeMenu);
+      }
+    };
+
+    document.addEventListener('click', closeMenu);
+    document.addEventListener('touchstart', closeMenu);
+  }
+
+  // Set user-defined leave (annual or sick)
+  function setUserDefinedLeave(dateString, leaveType) {
+    // Check if there's an existing leave to update counters
+    if (userDefinedLeaves[dateString]) {
+      // Decrement the appropriate counter for the existing leave
+      if (userDefinedLeaves[dateString] === 'annual') {
+        annualLeaveCount--;
+      } else if (userDefinedLeaves[dateString] === 'sick') {
+        sickLeaveCount--;
+      }
+    }
+
+    if (leaveType === null) {
+      // Clear the leave
+      delete userDefinedLeaves[dateString];
+      delete leaveData[dateString];
+    } else {
+      // Set the leave
+      userDefinedLeaves[dateString] = leaveType;
+
+      // Update leave data
+      leaveData[dateString] = {
+        type: leaveType,
+        color: leaveType === 'annual'
+                ? document.getElementById('annual-leave-color').value
+                : document.getElementById('sick-leave-color').value
+      };
+
+      // Increment the appropriate counter for the new leave
+      if (leaveType === 'annual') {
+        annualLeaveCount++;
+      } else if (leaveType === 'sick') {
+        sickLeaveCount++;
+      }
+    }
+
+    // Update the leave count display
+    updateLeaveCountDisplay();
+
+    // Re-render the calendar
+    renderCalendar(currentYear, currentMonth);
+  }
+
+  // Calculate leaves based on user input
+  function calculateLeaves() {
+    // Get input values
+    const startDateInput = document.getElementById('start-date').value;
+    if (!startDateInput) {
+      alert('请选择开始请假日期');
+      return;
+    }
+
+    const startDate = new Date(startDateInput);
+    const maternityDays = parseInt(document.getElementById('maternity-days').value) || 98;
+    const regionalBonusDays = parseInt(document.getElementById('regional-bonus-days').value) || 60;
+    const cSectionChecked = document.getElementById('c-section-checkbox').checked;
+    const cSectionDays = cSectionChecked ? (parseInt(document.getElementById('c-section-days').value) || 15) : 0;
+    const highRiskChecked = document.getElementById('high-risk-checkbox').checked;
+    const highRiskDays = highRiskChecked ? (parseInt(document.getElementById('high-risk-days').value) || 15) : 0;
+
+    // Get colors
+    const maternityColor = document.getElementById('maternity-color').value;
+    const cSectionColor = document.getElementById('c-section-color').value;
+    const highRiskColor = document.getElementById('high-risk-color').value;
+    const regionalBonusColor = document.getElementById('regional-bonus-color').value;
+
+    // Clear previous leave data (except user-defined leaves)
+    leaveData = { ...userDefinedLeaves };
+
+    // Calculate maternity leave
+    let currentDate = new Date(startDate);
+    let leaveCount = 1;
+
+    // First, calculate basic maternity leave
+    for (let i = 0; i < maternityDays; i++) {
+      const dateString = formatDate(currentDate);
+
+      // Skip if there's already user-defined leave
+      if (!userDefinedLeaves[dateString]) {
+        leaveData[dateString] = {
+          type: 'maternity',
+          color: maternityColor,
+          count: leaveCount++
+        };
+      }
+
+      // Move to next day
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    // Add C-section bonus days if applicable
+    if (cSectionChecked) {
+      for (let i = 0; i < cSectionDays; i++) {
+        const dateString = formatDate(currentDate);
+
+        // Skip if there's already user-defined leave
+        if (!userDefinedLeaves[dateString]) {
+          leaveData[dateString] = {
+            type: 'c-section',
+            color: cSectionColor,
+            count: leaveCount++
+          };
+        }
+
+        // Move to next day
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+    }
+
+    // Add high-risk bonus days if applicable
+    if (highRiskChecked) {
+      for (let i = 0; i < highRiskDays; i++) {
+        const dateString = formatDate(currentDate);
+
+        // Skip if there's already user-defined leave
+        if (!userDefinedLeaves[dateString]) {
+          leaveData[dateString] = {
+            type: 'high-risk',
+            color: highRiskColor,
+            count: leaveCount++
+          };
+        }
+
+        // Move to next day
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+    }
+
+    // Calculate regional bonus days (with holiday extension)
+    let regionalBonusRemaining = regionalBonusDays;
+    while (regionalBonusRemaining > 0) {
+      const dateString = formatDate(currentDate);
+
+      // Check if it's a public holiday
+      const isHoliday = PUBLIC_HOLIDAYS.some(holiday =>
+              holiday.date.getFullYear() === currentDate.getFullYear() &&
+              holiday.date.getMonth() === currentDate.getMonth() &&
+              holiday.date.getDate() === currentDate.getDate()
+      );
+
+      // Skip if there's already user-defined leave or it's a holiday
+      if (!userDefinedLeaves[dateString] && !isHoliday) {
+        leaveData[dateString] = {
+          type: 'regional-bonus',
+          color: regionalBonusColor,
+          count: leaveCount++
+        };
+        regionalBonusRemaining--;
+      }
+
+      // Move to next day
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+    // Reinitialize leave counters
+    initializeLeaveCounters();
+
+    // Re-render the calendar
+    renderCalendar(currentYear, currentMonth);
+  }
+
+  // Format date as YYYY-MM-DD
+  function formatDate(date) {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  // Initial console message
+  console.log('Maternity Leave Calendar initialized ✨');
+</script>
+</body>
+</html>
