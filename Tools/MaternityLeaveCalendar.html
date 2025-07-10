@@ -172,7 +172,7 @@
     }
 
     #sick-leave-count {
-      color: #FF9800;
+      color: #FFC0CB;
       font-weight: bold;
       font-size: 1.1rem;
     }
@@ -219,6 +219,35 @@
 
     .month-selector button:hover, .month-selector button:active {
       background-color: #e0e0e0;
+    }
+
+    /* Multi-select styles */
+    .multi-select-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    #multi-select-btn {
+      background-color: #2196F3;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #multi-select-btn.active {
+      background-color: #f44336;
+    }
+
+    .multi-select-mode .calendar td {
+      cursor: pointer;
+    }
+
+    .date-selected {
+      background-color: #f0f0f0 !important;
     }
 
     .calendar {
@@ -493,7 +522,7 @@
       <div class="form-group">
         <div class="color-picker-container">
           <span class="color-label">病假</span>
-          <input type="color" id="sick-leave-color" value="#FF9800">
+          <input type="color" id="sick-leave-color" value="#FFC0CB">
         </div>
       </div>
     </div>
@@ -520,6 +549,9 @@
         <button id="prev-month">&lt;</button>
         <h2 id="current-month">2025年7月</h2>
         <button id="next-month">&gt;</button>
+      </div>
+      <div class="multi-select-container">
+        <button id="multi-select-btn">多选日期</button>
       </div>
     </div>
 
@@ -564,7 +596,7 @@
       <span>年假</span>
     </div>
     <div class="legend-item">
-      <div class="legend-color" style="background-color: #FF9800;"></div>
+      <div class="legend-color" style="background-color: #FFC0CB;"></div>
       <span>病假</span>
     </div>
   </div>
@@ -608,12 +640,19 @@
   let annualLeaveCount = 0; // Track total annual leave days
   let sickLeaveCount = 0; // Track total sick leave days
 
+  // Multi-select variables
+  let isMultiSelectMode = false; // Track if multi-select mode is active
+  let firstSelectedDate = null; // First selected date in range
+  let secondSelectedDate = null; // Second selected date in range
+  let selectedDateRange = []; // Array of dates in the selected range
+
   // DOM elements
   const calendarBody = document.getElementById('calendar-body');
   const currentMonthElement = document.getElementById('current-month');
   const prevMonthButton = document.getElementById('prev-month');
   const nextMonthButton = document.getElementById('next-month');
   const calculateButton = document.getElementById('calculate-btn');
+  const multiSelectButton = document.getElementById('multi-select-btn');
 
   // Update the leave count display
   function updateLeaveCountDisplay() {
@@ -650,6 +689,262 @@
     prevMonthButton.addEventListener('click', navigateToPreviousMonth);
     nextMonthButton.addEventListener('click', navigateToNextMonth);
     calculateButton.addEventListener('click', calculateLeaves);
+    multiSelectButton.addEventListener('click', toggleMultiSelectMode);
+  }
+
+  // Toggle multi-select mode
+  function toggleMultiSelectMode() {
+    isMultiSelectMode = !isMultiSelectMode;
+
+    // Toggle button appearance
+    if (isMultiSelectMode) {
+      multiSelectButton.classList.add('active');
+      multiSelectButton.textContent = '退出多选';
+      document.body.classList.add('multi-select-mode');
+
+      // Reset selection variables
+      firstSelectedDate = null;
+      secondSelectedDate = null;
+      selectedDateRange = [];
+    } else {
+      multiSelectButton.classList.remove('active');
+      multiSelectButton.textContent = '多选日期';
+      document.body.classList.remove('multi-select-mode');
+
+      // Clear any highlighted cells and restore original colors
+      const highlightedCells = document.querySelectorAll('.date-selected');
+      highlightedCells.forEach(cell => {
+        cell.classList.remove('date-selected');
+
+        // Get the date string from the cell
+        const dateString = cell.getAttribute('data-date');
+
+        // Only restore color if the cell doesn't have a leave type
+        if (dateString && (!leaveData[dateString] || 
+            (leaveData[dateString].type !== 'maternity' && 
+             leaveData[dateString].type !== 'regional-bonus' && 
+             leaveData[dateString].type !== 'c-section' && 
+             leaveData[dateString].type !== 'high-risk'))) {
+          // Remove any background color that was added for selection
+          cell.style.backgroundColor = leaveData[dateString] ? leaveData[dateString].color : '';
+        }
+      });
+    }
+
+    // Re-render the calendar to update cell click handlers
+    renderCalendar(currentYear, currentMonth);
+  }
+
+  // Handle date selection in multi-select mode
+  function handleDateSelection(dateString) {
+    if (!firstSelectedDate) {
+      // First date selection
+      firstSelectedDate = dateString;
+      selectedDateRange = [dateString];
+
+      // Highlight the selected cell
+      const cell = document.querySelector(`td[data-date="${dateString}"]`);
+      if (cell) {
+        cell.classList.add('date-selected');
+      }
+    } else if (!secondSelectedDate) {
+      // Second date selection
+      secondSelectedDate = dateString;
+
+      // Determine start and end dates (ensure chronological order)
+      const startDate = new Date(firstSelectedDate);
+      const endDate = new Date(dateString);
+
+      let rangeStart, rangeEnd;
+      if (startDate <= endDate) {
+        rangeStart = startDate;
+        rangeEnd = endDate;
+      } else {
+        rangeStart = endDate;
+        rangeEnd = startDate;
+      }
+
+      // Generate array of dates in the range
+      selectedDateRange = [];
+      const currentDate = new Date(rangeStart);
+      while (currentDate <= rangeEnd) {
+        const currentDateString = formatDate(currentDate);
+
+        // Check if this date can be selected (not maternity, regional bonus, etc.)
+        const canBeSelected = !leaveData[currentDateString] || 
+                             (leaveData[currentDateString].type === 'annual' || 
+                              leaveData[currentDateString].type === 'sick' ||
+                              leaveData[currentDateString].type === undefined);
+
+        if (canBeSelected) {
+          selectedDateRange.push(currentDateString);
+        }
+
+        // Move to next day
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+
+      // Highlight all cells in the range
+      selectedDateRange.forEach(date => {
+        const cell = document.querySelector(`td[data-date="${date}"]`);
+        if (cell) {
+          cell.classList.add('date-selected');
+        }
+      });
+
+      // Show context menu for applying leave type to the range
+      if (selectedDateRange.length > 0) {
+        showRangeContextMenu();
+      }
+    }
+  }
+
+  // Show context menu for applying leave type to the selected range
+  function showRangeContextMenu() {
+    // Remove any existing context menu
+    const existingMenu = document.querySelector('.leave-context-menu');
+    if (existingMenu) {
+      existingMenu.remove();
+    }
+
+    // Create context menu
+    const contextMenu = document.createElement('div');
+    contextMenu.className = 'leave-context-menu';
+    contextMenu.style.position = 'fixed';
+    contextMenu.style.backgroundColor = 'white';
+    contextMenu.style.border = '1px solid #ddd';
+    contextMenu.style.borderRadius = '8px';
+    contextMenu.style.padding = '8px';
+    contextMenu.style.boxShadow = '0 4px 10px rgba(0,0,0,0.2)';
+    contextMenu.style.zIndex = '1000';
+    contextMenu.style.width = 'auto';
+    contextMenu.style.minWidth = '200px';
+
+    // Position in the center of the screen
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    contextMenu.style.left = `${(windowWidth - 200) / 2}px`;
+    contextMenu.style.top = `${(windowHeight - 150) / 2}px`;
+
+    // Create option styles
+    const optionStyle = `
+        padding: 12px 15px;
+        cursor: pointer;
+        border-bottom: 1px solid #eee;
+        font-size: 16px;
+        text-align: center;
+        transition: background-color 0.2s;
+    `;
+
+    // Add title
+    const title = document.createElement('div');
+    title.textContent = `已选择 ${selectedDateRange.length} 天`;
+    title.style.cssText = `
+        padding: 10px;
+        font-weight: bold;
+        text-align: center;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 5px;
+    `;
+    contextMenu.appendChild(title);
+
+    // Add options
+    const annualLeaveOption = document.createElement('div');
+    annualLeaveOption.textContent = '设置为年假';
+    annualLeaveOption.style.cssText = optionStyle;
+    annualLeaveOption.addEventListener('click', function() {
+      applyLeaveTypeToRange('annual');
+      contextMenu.remove();
+    });
+
+    const sickLeaveOption = document.createElement('div');
+    sickLeaveOption.textContent = '设置为病假';
+    sickLeaveOption.style.cssText = optionStyle;
+    sickLeaveOption.addEventListener('click', function() {
+      applyLeaveTypeToRange('sick');
+      contextMenu.remove();
+    });
+
+    const clearLeaveOption = document.createElement('div');
+    clearLeaveOption.textContent = '清除假期';
+    clearLeaveOption.style.cssText = optionStyle;
+    clearLeaveOption.addEventListener('click', function() {
+      applyLeaveTypeToRange(null); // null will clear the leave
+      contextMenu.remove();
+    });
+
+    const cancelOption = document.createElement('div');
+    cancelOption.textContent = '取消';
+    cancelOption.style.cssText = optionStyle;
+    cancelOption.style.borderBottom = 'none';
+    cancelOption.addEventListener('click', function() {
+      // Clear selection
+      firstSelectedDate = null;
+      secondSelectedDate = null;
+
+      // Clear highlighted cells
+      const highlightedCells = document.querySelectorAll('.date-selected');
+      highlightedCells.forEach(cell => {
+        cell.classList.remove('date-selected');
+      });
+
+      selectedDateRange = [];
+      contextMenu.remove();
+    });
+
+    // Add touch feedback
+    const addTouchFeedback = (element) => {
+      element.addEventListener('touchstart', function() {
+        this.style.backgroundColor = '#f0f0f0';
+      });
+      element.addEventListener('touchend', function() {
+        this.style.backgroundColor = 'transparent';
+      });
+      element.addEventListener('mousedown', function() {
+        this.style.backgroundColor = '#f0f0f0';
+      });
+      element.addEventListener('mouseup', function() {
+        this.style.backgroundColor = 'transparent';
+      });
+    };
+
+    addTouchFeedback(annualLeaveOption);
+    addTouchFeedback(sickLeaveOption);
+    addTouchFeedback(clearLeaveOption);
+    addTouchFeedback(cancelOption);
+
+    contextMenu.appendChild(annualLeaveOption);
+    contextMenu.appendChild(sickLeaveOption);
+    contextMenu.appendChild(clearLeaveOption);
+    contextMenu.appendChild(cancelOption);
+
+    document.body.appendChild(contextMenu);
+  }
+
+  // Apply leave type to the selected range
+  function applyLeaveTypeToRange(leaveType) {
+    if (selectedDateRange.length === 0) return;
+
+    for (const dateString of selectedDateRange) {
+      const date = new Date(dateString);
+      const dayOfWeek = date.getDay(); // 0 = Sunday, 6 = Saturday
+
+      // For annual leave, skip weekends
+      if (leaveType === 'annual' && (dayOfWeek === 0 || dayOfWeek === 6)) {
+        continue;
+      }
+
+      // Apply leave type to this date
+      setUserDefinedLeave(dateString, leaveType);
+    }
+
+    // Reset selection variables
+    firstSelectedDate = null;
+    secondSelectedDate = null;
+    selectedDateRange = [];
+
+    // Exit multi-select mode
+    toggleMultiSelectMode();
   }
 
   // Navigate to previous month
@@ -786,10 +1081,32 @@
             cell.appendChild(workingDayLabel);
           }
 
-          // Add click event to toggle annual/sick leave
-          cell.addEventListener('click', function() {
-            toggleUserDefinedLeave(dateString);
-          });
+          // Check if this date is in the selected range
+          if (selectedDateRange.includes(dateString)) {
+            cell.classList.add('date-selected');
+          }
+
+          // Add click event based on mode
+          if (isMultiSelectMode) {
+            // Only allow selection if the cell doesn't have maternity, regional bonus, c-section, or high-risk leave
+            const canBeSelected = !leaveData[dateString] || 
+                                 (leaveData[dateString].type === 'annual' || 
+                                  leaveData[dateString].type === 'sick' ||
+                                  leaveData[dateString].type === undefined);
+
+            if (canBeSelected) {
+              cell.addEventListener('click', function() {
+                handleDateSelection(dateString);
+              });
+            } else {
+              cell.style.cursor = 'not-allowed';
+            }
+          } else {
+            // Regular mode - toggle annual/sick leave
+            cell.addEventListener('click', function() {
+              toggleUserDefinedLeave(dateString);
+            });
+          }
 
           date++;
         }
@@ -1004,8 +1321,11 @@
     const highRiskColor = document.getElementById('high-risk-color').value;
     const regionalBonusColor = document.getElementById('regional-bonus-color').value;
 
-    // Clear previous leave data (except user-defined leaves)
-    leaveData = { ...userDefinedLeaves };
+    // Reset user-defined leaves to clear annual and sick leave counters
+    userDefinedLeaves = {};
+
+    // Clear previous leave data
+    leaveData = {};
 
     // Calculate maternity leave
     let currentDate = new Date(startDate);
