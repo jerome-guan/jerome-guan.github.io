@@ -1,5 +1,7 @@
 window.onload = function() {
     document.querySelector('div.shade').style.display = 'none';
+    // Hide all components in #mid-main
+    document.querySelector('#mid-main').style.display = 'none';
     // 调整页面尺寸
     function refreshRem(designWidth) {
         let winWidth = document.documentElement.offsetWidth;
@@ -10,7 +12,7 @@ window.onload = function() {
         refreshRem(1920);
     })
 
-    
+
     // mouse chase
     // 角度参考系的选取：以飞机所在盒子的顶部中心作为顶角点。
     //【顶角点到nav盒子顶部的距离】=（rotateBaseY），【顶角点到nav盒子左部的距离】=（rotateBaseX）。
@@ -47,9 +49,9 @@ window.onload = function() {
         plane.style.transformOrigin = rotateOriX * 100 + '% ' + rotateOriY * 100 + '%';
     })
 
-    
+
     // 可点击事件地球放大效果
-    
+
 
 
 }
