@@ -11,6 +11,106 @@ window.onload = function() {
     window.addEventListener('resize', function() {
         refreshRem(1920);
     })
+    
+    // Tools dropdown functionality - modified for top-header placement
+    const toolsDropdown = document.querySelector('.tools-dropdown');
+    const dropdownMenu = document.querySelector('header#top-header .dropdown-menu');
+    
+    // Function to position the dropdown menu below the Tools button
+    function positionDropdownMenu() {
+        // Get the position of the Tools button
+        const toolsRect = toolsDropdown.getBoundingClientRect();
+        
+        // Position the dropdown menu below the Tools button
+        dropdownMenu.style.position = 'fixed';
+        dropdownMenu.style.top = toolsRect.bottom + 'px';
+        dropdownMenu.style.left = toolsRect.left + 'px';
+        // Set width to 1.5 times the Tools button width
+        dropdownMenu.style.width = (toolsRect.width * 1.5) + 'px';
+    }
+    
+    // Position the dropdown menu initially
+    window.addEventListener('load', positionDropdownMenu);
+    window.addEventListener('resize', positionDropdownMenu);
+    
+    // Track if mouse is over dropdown menu or tools button
+    let isMouseOverDropdown = false;
+    let isMouseOverTools = false;
+    
+    // We'll use mouseenter/mouseleave for hover behavior
+    toolsDropdown.addEventListener('mouseenter', function() {
+        isMouseOverTools = true;
+        positionDropdownMenu(); // Ensure correct position
+        dropdownMenu.style.display = 'block';
+    });
+    
+    toolsDropdown.addEventListener('mouseleave', function() {
+        isMouseOverTools = false;
+        // Don't hide immediately, give time for mouse to enter dropdown
+        setTimeout(function() {
+            // Only hide if mouse is not over dropdown and not in "clicked open" state
+            if (!isMouseOverDropdown && !toolsDropdown.classList.contains('menu-clicked')) {
+                dropdownMenu.style.display = 'none';
+            }
+        }, 50);
+    });
+    
+    // Add event listeners for the dropdown menu itself
+    dropdownMenu.addEventListener('mouseenter', function() {
+        isMouseOverDropdown = true;
+    });
+    
+    dropdownMenu.addEventListener('mouseleave', function() {
+        isMouseOverDropdown = false;
+        // Only hide if we're not in "clicked open" state and mouse is not over tools
+        if (!toolsDropdown.classList.contains('menu-clicked') && !isMouseOverTools) {
+            dropdownMenu.style.display = 'none';
+        }
+    });
+    
+    // Click behavior toggles a persistent state
+    toolsDropdown.addEventListener('click', function(e) {
+        // Only toggle if clicking on the Tools text or its span
+        if (e.target.tagName === 'SPAN' || e.target === toolsDropdown) {
+            positionDropdownMenu(); // Ensure correct position
+            toolsDropdown.classList.toggle('menu-clicked');
+            
+            // If we're toggling on, show the menu
+            if (toolsDropdown.classList.contains('menu-clicked')) {
+                dropdownMenu.style.display = 'block';
+            } else {
+                // If we're toggling off and not hovering over either element, hide the menu
+                if (!isMouseOverTools && !isMouseOverDropdown) {
+                    dropdownMenu.style.display = 'none';
+                }
+            }
+            
+            e.stopPropagation();
+        }
+    });
+    
+    // Handle clicks on dropdown menu links
+    dropdownMenu.addEventListener('click', function(e) {
+        // If clicking on a link, close the dropdown
+        if (e.target.tagName === 'A') {
+            toolsDropdown.classList.remove('menu-clicked');
+            // We don't hide the menu immediately as the link will open in a new tab
+        }
+    });
+    
+    // Close dropdown when clicking elsewhere on the page
+    document.addEventListener('click', function(e) {
+        // Don't close if clicking on the dropdown menu itself or the tools button
+        if (!dropdownMenu.contains(e.target) && !toolsDropdown.contains(e.target)) {
+            if (toolsDropdown.classList.contains('menu-clicked')) {
+                toolsDropdown.classList.remove('menu-clicked');
+                // Only hide if mouse is not over the dropdown or the tools button
+                if (!isMouseOverTools && !isMouseOverDropdown) {
+                    dropdownMenu.style.display = 'none';
+                }
+            }
+        }
+    });
 
 
     // mouse chase

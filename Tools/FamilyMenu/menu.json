@@ -1,0 +1,89 @@
+{
+  "_comment": "如何添加菜品说明：本文件使用JSON格式存储菜单数据。您可以按照以下步骤添加新菜品：",
+  "_comment_add_dish": "1. 在已有类别中添加菜品：找到对应类别的'dishes'数组，在数组末尾添加新的菜品对象，确保每个属性都有值。",
+  "_comment_add_category": "2. 添加新类别：在'categories'数组末尾添加新的类别对象，包含id、name和dishes数组。",
+  "_comment_format": "3. 格式说明：每个菜品必须包含id(唯一标识)、name(菜名)、mainIngredients(主要材料)、allIngredients(所有材料)和method(做法)。",
+  "_comment_example": "4. 示例：添加新菜品时，复制现有菜品对象并修改其内容，注意保留逗号和格式。",
+  "_comment_warning": "5. 注意：修改后请确保JSON格式正确，每个花括号和方括号都要配对，除最后一项外每项后面都要有逗号。",
+  "categories": [
+    {
+      "id": "breakfast",
+      "name": "早餐",
+      "dishes": [
+        {
+          "id": "congee",
+          "name": "白粥",
+          "mainIngredients": "大米、水",
+          "allIngredients": "大米100g、水1000ml、盐少许",
+          "method": "1. 大米洗净，加水煮开\n2. 转小火慢煮30分钟\n3. 加盐调味即可"
+        },
+        {
+          "id": "egg",
+          "name": "煎蛋",
+          "mainIngredients": "鸡蛋、油",
+          "allIngredients": "鸡蛋2个、食用油适量、盐少许",
+          "method": "1. 热锅放油\n2. 打入鸡蛋\n3. 煎至两面金黄即可"
+        }
+      ]
+    },
+    {
+      "id": "maindish",
+      "name": "大菜",
+      "dishes": [
+        {
+          "id": "braised_pork",
+          "name": "红烧肉",
+          "mainIngredients": "五花肉、冰糖、生抽",
+          "allIngredients": "五花肉500g、冰糖30g、生抽3勺、老抽1勺、料酒2勺、葱段、姜片",
+          "method": "1. 五花肉切块焯水\n2. 热锅放油，炒糖色\n3. 下肉块翻炒\n4. 加调料和水炖煮40分钟"
+        },
+        {
+          "id": "sweet_sour_ribs",
+          "name": "糖醋排骨",
+          "mainIngredients": "排骨、白糖、醋",
+          "allIngredients": "排骨400g、白糖3勺、醋4勺、生抽2勺、料酒1勺、盐少许",
+          "method": "1. 排骨焯水备用\n2. 热锅放油炸排骨\n3. 调糖醋汁\n4. 炒至收汁即可"
+        }
+      ]
+    },
+    {
+      "id": "vegetable",
+      "name": "蔬菜",
+      "dishes": [
+        {
+          "id": "spinach",
+          "name": "菠菜",
+          "mainIngredients": "菠菜、蒜",
+          "allIngredients": "菠菜300g、蒜3瓣、盐、生抽、香油",
+          "method": "1. 菠菜洗净焯水\n2. 蒜切末爆香\n3. 下菠菜翻炒\n4. 调味即可"
+        }
+      ]
+    },
+    {
+      "id": "fruit",
+      "name": "水果",
+      "dishes": [
+        {
+          "id": "apple",
+          "name": "苹果",
+          "mainIngredients": "苹果",
+          "allIngredients": "苹果1个",
+          "method": "洗净削皮切块即可食用"
+        }
+      ]
+    },
+    {
+      "id": "dessert",
+      "name": "甜品",
+      "dishes": [
+        {
+          "id": "pudding",
+          "name": "布丁",
+          "mainIngredients": "牛奶、鸡蛋、糖",
+          "allIngredients": "牛奶200ml、鸡蛋2个、白糖50g、香草精几滴",
+          "method": "1. 牛奶加热至微温\n2. 鸡蛋打散加糖\n3. 混合过筛\n4. 蒸制15分钟"
+        }
+      ]
+    }
+  ]
+}
